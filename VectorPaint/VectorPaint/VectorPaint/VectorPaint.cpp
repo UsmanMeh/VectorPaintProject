@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
 		cout << "SDL could not init" << SDL_GetError();
-		return;
+		return 0;
 	}
 	else
 	{
