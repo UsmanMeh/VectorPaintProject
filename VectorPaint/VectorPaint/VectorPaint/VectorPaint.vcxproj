@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -72,17 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,7 +100,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -112,6 +118,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,6 +132,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,11 +150,42 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\thirdParty\glad\src\glad.c" />
+    <ClCompile Include="..\thirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_impl_sdlrenderer.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\thirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="VectorPaint.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\thirdParty\imgui\imconfig.h" />
+    <ClInclude Include="..\thirdParty\imgui\imgui.h" />
+    <ClInclude Include="..\thirdParty\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\thirdParty\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\thirdParty\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="..\thirdParty\imgui\imgui_impl_sdlrenderer.h" />
+    <ClInclude Include="..\thirdParty\imgui\imgui_internal.h" />
+    <ClInclude Include="..\thirdParty\imgui\imgui_stdlib.h" />
+    <ClInclude Include="..\thirdParty\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\thirdParty\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\thirdParty\imgui\imstb_truetype.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\thirdParty\imgui\imgui.gdb" />
+    <None Include="..\thirdParty\imgui\imgui.natstepfilter" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\thirdParty\imgui\imgui.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
