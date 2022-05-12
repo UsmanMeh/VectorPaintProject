@@ -165,7 +165,17 @@
     <ClCompile Include="..\thirdParty\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="..\thirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\thirdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="CommandManager.cpp" />
+    <ClCompile Include="ECS.cpp" />
+    <ClCompile Include="ECSManager.cpp" />
+    <ClCompile Include="GUIManager.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="VectorPaint.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\thirdParty\imgui\imconfig.h" />
@@ -179,6 +189,22 @@
     <ClInclude Include="..\thirdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\thirdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="..\thirdParty\imgui\imstb_truetype.h" />
+    <ClInclude Include="AddPolygonCommand.h" />
+    <ClInclude Include="CommandManager.h" />
+    <ClInclude Include="Components.h" />
+    <ClInclude Include="ECSManager.h" />
+    <ClInclude Include="GUIManager.h" />
+    <ClInclude Include="ECS.h" />
+    <ClInclude Include="ICommand.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="PolygonComponent.h" />
+    <ClInclude Include="PolygonRendererSystem.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\thirdParty\imgui\imgui.gdb" />
