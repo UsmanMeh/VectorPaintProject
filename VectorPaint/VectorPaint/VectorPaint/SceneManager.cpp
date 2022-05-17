@@ -36,3 +36,8 @@ void SceneManager::Clean()
 		it->Clean();
 	}
 }
+
+Scene* SceneManager::GetActvieScene()
+{
+	return &activeScenes[0];
+}

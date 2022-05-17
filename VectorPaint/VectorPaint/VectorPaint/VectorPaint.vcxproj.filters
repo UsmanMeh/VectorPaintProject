@@ -28,6 +28,12 @@
     <Filter Include="ECS">
       <UniqueIdentifier>{85d43272-bbd6-4ecd-8dd2-a8060dc4032c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\GraphicsCore">
+      <UniqueIdentifier>{501bf5c9-90b9-4705-a943-5e17a5f32aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\GraphicsCore\Shaders">
+      <UniqueIdentifier>{4fc5583e-cb89-4584-99a2-13c84903d4e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VectorPaint.cpp">
@@ -91,6 +97,21 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.h">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,6 +197,36 @@
     <ClInclude Include="Components.h">
       <Filter>ECS</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Core\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Core\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Core\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Core\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives.h">
+      <Filter>Core\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Core\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\thirdParty\imgui\imgui.gdb">
@@ -183,6 +234,12 @@
     </None>
     <None Include="..\thirdParty\imgui\imgui.natstepfilter">
       <Filter>imgui</Filter>
+    </None>
+    <None Include="vertex_shader.glsl">
+      <Filter>Core\GraphicsCore\Shaders</Filter>
+    </None>
+    <None Include="fragment_shader.glsl">
+      <Filter>Core\GraphicsCore\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

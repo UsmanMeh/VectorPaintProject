@@ -6,6 +6,7 @@
 #include <memory>
 #include <algorithm>
 #include "Vector2D.h"
+#include "Rect.h"
 
 namespace ECS
 {
@@ -74,7 +75,11 @@ namespace ECS
 	public:
 		void Update();
 		void Render();
-		void add();
+		void AddLine(Rect pRect);
+		void AddSquare(Rect pRect);
+		void AddRectangle(Rect pRect);
+		void AddTriangle(Rect pRect);
+
 		template <typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs);
 		template<typename T> T& getComponent() const;
 		template <typename T> bool hasComponent() const;

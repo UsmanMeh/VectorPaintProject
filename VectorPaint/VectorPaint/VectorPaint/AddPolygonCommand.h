@@ -7,21 +7,32 @@ class AddPolygonCommand :
 {
 private:
     ECS::ECSManager* entityManager;
-    Vector2D mPos, mScale;
+    Rect mRect;
+    ToolsManager::Tools selectedTool;
 public:
-    AddPolygonCommand(ECS::ECSManager* pEntityManager , Vector2D pPos ,Vector2D pScale)
+    AddPolygonCommand(ECS::ECSManager* pEntityManager , Rect pRect):mRect(pRect)
     {
+        selectedTool = ToolsManager::GetInstance()->GetSelectedTool();
         entityManager = pEntityManager;
-        mPos = pPos;
-        mScale = pScale;
     }
     void Execute() override
     {
         auto& shape(entityManager->AddEntity());
-        shape.add();
-        //shape.addComponent<TransformComponent>(mPos, mScale);
-        //shape.addComponent<PolygonComponent>();
-        //shape.addSystem<PolygonRendererSystem>();
+        switch (selectedTool)
+        {
+        case ToolsManager::Square:
+            shape.AddSquare(mRect);
+            break;
+        case ToolsManager::Rectangle:
+            shape.AddRectangle(mRect);
+            break;
+        case ToolsManager::Triangle:
+            shape.AddTriangle(mRect);
+            break;
+
+        default:
+            break;
+        }
     }
     void Undo()  override
     {

@@ -24,7 +24,7 @@ bool Window::Initialize()
 		std::cout << "SDL is Initialize and ready";
 	}
 
-	SDLWindow = SDL_CreateWindow("STL Test Window", 0, 200, Width, Height, flags);
+	SDLWindow = SDL_CreateWindow("Vector Painter.", 0, 200, Width, Height, flags);
 
 	SDL_GL_MakeCurrent(SDLWindow, GLContext);
 	// Enable vsync

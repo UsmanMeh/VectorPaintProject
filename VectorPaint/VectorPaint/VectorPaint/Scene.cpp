@@ -11,23 +11,18 @@
 	}
 	void Scene::Initialize()
 	{
-		entityManager = new ECS::ECSManager();
-		commandManager = new CommandManager();
+		mEntityManager = new ECS::ECSManager();
+		mCommandManager = new CommandManager();
 		std::cout << "Scene::Initialize(" << Name << ")" << std::endl;
-		//Temp test for the adding new object through commands to the ECS manager.
-		std::unique_ptr<AddPolygonCommand>  addPolyCmd;
-		addPolyCmd = std::unique_ptr<AddPolygonCommand>(new AddPolygonCommand(entityManager, Vector2D(50, 50), Vector2D(50, 50)));
-		commandManager->AddCommand(std::move(addPolyCmd));
-
 	}
 	void Scene::Update()
 	{
-		entityManager->Update();
+		mEntityManager->Update();
 		//std::cout << "Scene::Update(" << Name << ")" << std::endl; 
 	}
 	void Scene::Render()
 	{
-		entityManager->Render();
+		mEntityManager->Render();
 		//std::cout << "Scene::Render(" << Name << ")" << std::endl;
 	}
 	void Scene::RenderGUI()
@@ -36,11 +31,11 @@
 	}
 	void Scene::Clean()
 	{
-		delete entityManager;
+		delete mEntityManager;
 		std::cout << "Scene::Clean(" << Name << ")" << std::endl;
 	}
 
 	ECS::Entity& Scene::CreateNewEntity()
 	{
-		return entityManager->AddEntity();
+		return mEntityManager->AddEntity();
 	}

@@ -4,9 +4,9 @@
 #include "CommandManager.h"
 class Scene
 {
-	ECS::ECSManager* entityManager;
-	CommandManager* commandManager;
 public:
+	ECS::ECSManager* mEntityManager;
+	CommandManager* mCommandManager;
 	std::string Name;
 
 	Scene();

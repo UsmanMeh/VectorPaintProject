@@ -4,28 +4,33 @@
 #include <vector>
 #include <glad/glad.h>
 #include "ECS.h"
+#include "Model.h"
+#include "ToolsManager.h"
 
 class PolygonComponent : public ECS::Component
 {
+	Model* model;
 public:
-	std::vector<GLfloat> rect_vertices;
+	Mesh* mesh;
+	Material* material;
+	Texture* texture;
+	PolygonComponent() {};
+	PolygonComponent(Mesh* pMesh)
+	{
+		mesh = pMesh;
+		material = new Material();
+		texture = new Texture("test.png", GL_TEXTURE_2D);
+	}
 	~PolygonComponent() override {}
 	void Initialize() override
 	{
-		float size = 0.4f;
-		rect_vertices.push_back(-1.0 * size);
-		rect_vertices.push_back(-1.0 * size);
-		rect_vertices.push_back(-1.0 * size);
-		rect_vertices.push_back(1.0 * size);
-		rect_vertices.push_back(1.0 * size);
-		rect_vertices.push_back(1.0 * size);
-		rect_vertices.push_back(-1.0 * size);
-		rect_vertices.push_back(-1.0 * size);
-		rect_vertices.push_back(1.0 * size);
-		rect_vertices.push_back(1.0 * size);
-		rect_vertices.push_back(1.0 * size);
-		rect_vertices.push_back(-1.0 * size);
+		model = new Model(mesh, material , texture, ToolsManager::GetInstance()->GetCurrentColor());
+	}
+	Model* GetModel()
+	{
+		return model;
 	}
 	void Update() override
-	{}
+	{
+	}
 };

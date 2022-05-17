@@ -4,11 +4,14 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include <imgui_internal.h>
+#include <vec4.hpp>
 
-float fillColor[] = { 1,1,1,1 };
 bool GUIManager::Initialize(Window* p_window)
 {
 	window = p_window;
+	mToolsManager = ToolsManager::GetInstance();
+	debug = Debug::GetInstance();
+	debug->Initialize();
 	const char* glsl_version = "#version 120";
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -18,12 +21,21 @@ bool GUIManager::Initialize(Window* p_window)
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 
+	fillColor[0] = 0;
+	fillColor[1] = 0;
+	fillColor[2] = .5;
+	fillColor[3] = 1;
+
 	// Setup Platform/Renderer backends
 	ImGui_ImplSDL2_InitForOpenGL(window->SDLWindow, window->GLContext);
 	ImGui_ImplOpenGL3_Init(glsl_version);
     return false;
 }
-
+bool 
+square = true,
+circle = false, 
+rectangle = false,
+triangle = false;
 void GUIManager::RenderGUI()
 {
 	ImGui_ImplOpenGL3_NewFrame();
@@ -34,27 +46,29 @@ void GUIManager::RenderGUI()
 	//ImGui::ShowDemoWindow();
 	ImGui::Begin("Tools");
 
-	//selection = ImGui::RadioButton("Selection Tool", selection);
-	//circle = ImGui::RadioButton("Circle Tool", circle);
-	//rectangle = ImGui::RadioButton("rectangle Tool", rectangle);
-	//triangle = ImGui::RadioButton("triangle Tool", triangle);
+	for (int tool = ToolsManager::Tools::Selection; tool != ToolsManager::Tools::size; tool++)
+	{
+	    if(ImGui::RadioButton(mToolsManager->ToolsNameList[static_cast<ToolsManager::Tools>(tool)].c_str(), static_cast<ToolsManager::Tools>(tool) == mToolsManager->GetSelectedTool()))
+		{
+			mToolsManager->ToolsList[static_cast<ToolsManager::Tools>(tool)] = true;
+			mToolsManager->SetSelectedTool(static_cast<ToolsManager::Tools>(tool));
+		}
+	}
 
 	ImGui::End();
-
+	ImGui::SetNextItemWidth(500);
 	ImGui::Begin("Color Selection");
-	ImGui::ColorPicker4("Select color", fillColor , ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_Float);
+	ImGui::ColorPicker4("Select color", fillColor , ImGuiColorEditFlags_DisplayRGB  | ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_Float | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoSidePreview);
+	const ImVec4 col_v4(fillColor[0], fillColor[1], fillColor[2], fillColor[3]);
+	ImGui::SetNextItemWidth(500);
+	ImGui::ColorButton("Test Color Button", col_v4);
+	mToolsManager->SetCurrentColor(glm::vec4(fillColor[0], fillColor[1], fillColor[2] , fillColor[3]));
 	ImGui::End();
 
-
-	ImGui::Begin("Debug Window");
-	ImGui::Text("Debug Window");
-	ImGui::End();
-	ImGui::Begin("ViewPort");
-	ImGui::End();
+	debug->RenderGUI();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 	//SDL_GL_SwapWindow(window->SDLWindow);
 }
 void GUIManager::SetDockSpace()
@@ -87,30 +101,12 @@ void GUIManager::SetDockSpace()
 	ImGui::PopStyleVar(2);
 	dockspace_id = ImGui::GetID("MainDockSpace");
 	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-	//static auto first_time = true;
-	//if (first_time)
-	//{
-	//	first_time = false;
 
-	//	ImGui::DockBuilderRemoveNode(dockspace_id); // Clear out existing layout
-	//	ImGui::DockBuilderAddNode(dockspace_id, ImGuiDockNodeFlags_None); // Add empty node
-	//	ImGui::DockBuilderSetNodeSize(dockspace_id, viewport->Size);
-
-	//	ImGuiID dockMainId = dockspace_id; // This variable will track the document node, however we are not using it here as we aren't docking anything into it.
-	//	ImGuiID dockIdLeft = ImGui::DockBuilderSplitNode(dockMainId, ImGuiDir_Left, 0.10f, NULL, &dockMainId);
-	//	ImGuiID dockIdBottom = ImGui::DockBuilderSplitNode(dockMainId, ImGuiDir_Down, 0.20f, NULL, &dockMainId);
-	//	ImGuiID dockIdLeftBottom = ImGui::DockBuilderSplitNode(dockIdLeft, ImGuiDir_Down, 0.20f, NULL, &dockMainId);
-
-	//	ImGui::DockBuilderDockWindow("ViewPort", dockMainId);
-	//	ImGui::DockBuilderDockWindow("Tools", dockIdLeft);
-	//	ImGui::DockBuilderDockWindow("Color Selection", dockIdLeftBottom);
-	//	ImGui::DockBuilderDockWindow("Debug Window", dockIdBottom);
-	//	ImGui::DockBuilderFinish(dockspace_id);
-	//}
 	ImGui::End();
 }
 void GUIManager::Clean()
 {
+	debug->Clean();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();

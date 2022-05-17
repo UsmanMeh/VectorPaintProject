@@ -13,5 +13,7 @@ public:
 	void Render();
 	void RenderGUI();
 	void Clean();
+
+	Scene* GetActvieScene();
 };
 

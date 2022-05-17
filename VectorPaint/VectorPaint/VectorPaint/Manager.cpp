@@ -2,7 +2,6 @@
 #include <imgui_impl_sdl.h>
 
 Manager* Manager::instance = nullptr;
-
 Manager* Manager::GetInstance()
 {
 	if (!instance)
@@ -16,10 +15,10 @@ void Manager::Initialize()
 	guiManager.Initialize(&window);
 	renderer.Initialize();
 	sceneManager.Initialize();
+	mouseController.Initialize(sceneManager.GetActvieScene(), &renderer);
 }
 void Manager::Update()
 {
-	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
 		ImGui_ImplSDL2_ProcessEvent(&event);
@@ -36,18 +35,21 @@ void Manager::Update()
 				{
 					window.Width = event.window.data1;
 					window.Height = event.window.data2;
+					glViewport(window.Width / 4, window.Height * 0.05f, window.Width / 2, window.Height - window.Height * 0.1f);
 					break;
 				}
 			}
 		}
+		mouseController.UpdateEvent(event);
 	}
 	//renderer.Update();
 	sceneManager.Update();
 }
 void Manager::Render()
 {
-	renderer.PreRender();
-	//renderer.Render(window.SDLWindow);
+	renderer.PreRender(&window);
+	renderer.Render(window.SDLWindow);
+	mouseController.Render();
 	sceneManager.Render();
 }
 void Manager::RenderGUI()

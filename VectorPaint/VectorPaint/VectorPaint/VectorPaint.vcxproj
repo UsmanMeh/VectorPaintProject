@@ -72,18 +72,18 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\thirdParty\SDL2_image-2.0.5\include;$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\thirdParty\SDL2_image-2.0.5\lib\x86;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\thirdParty\SDL2_image-2.0.5\include;$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\thirdParty\SDL2_image-2.0.5\lib\x86;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\thirdparty\SDL2_image-2.0.5\include;$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\glad\include;$(SolutionDir)\thirdParty\glm;$(SolutionDir)\thirdParty\SDL2-2.0.20\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\thirdparty\SDL2_image-2.0.5\lib\x64;$(SolutionDir)\thirdparty\SDL2-2.0.20\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -100,8 +100,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\SDL2_image-2.0.5\lib\x86;$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,8 +118,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\SDL2_image-2.0.5\lib\x86;$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -132,8 +132,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\thirdParty\imgui;$(SolutionDir)\thirdParty\SDL2_image-2.0.5\lib\x64;$(SolutionDir)\thirdParty\SDL2-2.0.20\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,13 +166,18 @@
     <ClCompile Include="..\thirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\thirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="CommandManager.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="ECSManager.cpp" />
     <ClCompile Include="GUIManager.cpp" />
     <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="MouseController.cpp" />
+    <ClCompile Include="Rect.h" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="ToolsManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="VectorPaint.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -192,23 +197,35 @@
     <ClInclude Include="AddPolygonCommand.h" />
     <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="ECSManager.h" />
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="ECS.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="MouseController.h" />
+    <ClInclude Include="Primitives.h" />
     <ClInclude Include="ICommand.h" />
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="PolygonComponent.h" />
     <ClInclude Include="PolygonRendererSystem.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="ToolsManager.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\thirdParty\imgui\imgui.gdb" />
     <None Include="..\thirdParty\imgui\imgui.natstepfilter" />
+    <None Include="fragment_shader.glsl" />
+    <None Include="vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="..\thirdParty\imgui\imgui.natvis" />

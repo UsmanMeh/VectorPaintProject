@@ -22,10 +22,69 @@ namespace ECS
 			systems[i]->Render();
 		}
 	}
-	void Entity::add()
+	//Selection , Line, Square, Rectangle, Triangle, Circle , size
+	Mesh* mesh;
+	void Entity::AddLine(Rect pRect)
 	{
-		this->addComponent<TransformComponent>(0.0f,0.0f,32,32,1,1);
-		this->addComponent<PolygonComponent>();
+		mesh = new Mesh(
+			Square(),
+			glm::vec3(0.f, 0.f, 0.f), 
+			glm::vec3(0.5f),
+			glm::vec3(0.0f,0.0f,0.f),
+			glm::vec3(1.0f)
+		);
+
+		this->addComponent<TransformComponent>(pRect.x+ pRect.w/2, pRect.y + pRect.h/2,32,32, pRect.w, pRect.h);
+		this->addComponent<PolygonComponent>(mesh);
+		this->addSystem<PolygonRendererSystem>();
+	}
+	void Entity::AddSquare(Rect pRect)
+	{
+		mesh = new Mesh(
+			Square(),
+			glm::vec3(0.f, 0.f, 0.f),
+			glm::vec3(0.5f),
+			glm::vec3(0.0f, 0.0f, 0.f),
+			glm::vec3(1.0f)
+		);
+		//TODO :: need to link the actual view port res here.
+		float aspactRatio = (1024.0f / 680.0f);
+		if (pRect.w <= pRect.h)
+		{
+			std::cout << " aspect ration " << (float)(1024.0f / 680.0f) << "\n";
+			this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.w, pRect.w * aspactRatio);
+		}
+		else
+			this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.h , pRect.h * aspactRatio);
+		this->addComponent<PolygonComponent>(mesh);
+		this->addSystem<PolygonRendererSystem>();
+	}
+	void Entity::AddRectangle(Rect pRect)
+	{
+		mesh = new Mesh(
+			Square(),
+			glm::vec3(0.f, 0.f, 0.f),
+			glm::vec3(0.5f),
+			glm::vec3(0.0f, 0.0f, 0.f),
+			glm::vec3(1.0f)
+		);
+
+		this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.w, pRect.h);
+		this->addComponent<PolygonComponent>(mesh);
+		this->addSystem<PolygonRendererSystem>();
+	}
+	void Entity::AddTriangle(Rect pRect)
+	{
+		mesh = new Mesh(
+			Triangle(),
+			glm::vec3(0.f, 0.f, 0.f),
+			glm::vec3(0.5f),
+			glm::vec3(0.0f, 0.0f, 0.f),
+			glm::vec3(1.0f)
+		);
+
+		this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.w, pRect.h);
+		this->addComponent<PolygonComponent>(mesh);
 		this->addSystem<PolygonRendererSystem>();
 	}
 	template <typename T, typename... TArgs> T & Entity::addComponent(TArgs&&... mArgs)

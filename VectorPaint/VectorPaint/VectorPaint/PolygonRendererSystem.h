@@ -18,6 +18,7 @@ public:
 	PolygonComponent polygonComponent;
 	TransformComponent transformComponent;
 	Renderer* renderer;
+	Model* model;
 	~PolygonRendererSystem() override{}
 	void Initialize() override
 	{
@@ -30,34 +31,18 @@ public:
 			transformComponent = entity->getComponent<TransformComponent>();
 		}
 		renderer = Manager::GetInstance()->GetRenderer();
+		model = polygonComponent.GetModel();
 	}
 	void Update() override
 	{
-		float move = sinf(SDL_GetTicks() / 1000.0 * (2 * 3.14) / 5);
-
-		float angle = 0;
-		glm::vec3 axis_z(0, 0, 1);
-		glm::mat4 m_transform = glm::translate(glm::mat4(1.0f), glm::vec3(transformComponent.Position.x, transformComponent.Position.y, 0.0))
-			*glm::scale(glm::mat4(1.0f), glm::vec3(transformComponent.Scale.x, transformComponent.Scale.y, 1));
-		
-		glUseProgram(renderer->program);
-		glUniformMatrix4fv(renderer->uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
+		//transformComponent.Position.x += .01;
+		//if (transformComponent.Position.x > 1.5f)
+		//	transformComponent.Position.x = -1.5f;
+		model->SetPosition(glm::vec2(transformComponent.Position.x, transformComponent.Position.y));
+		model->SetScale(glm::vec2(transformComponent.Scale.x, transformComponent.Scale.y));
 	}
 	void Render() override 
 	{
-		GLfloat* vert_array = &polygonComponent.rect_vertices[0] ;
-		glEnableVertexAttribArray(renderer->attribute_coord3d);
-		glVertexAttribPointer(
-			renderer->attribute_coord3d,   // attribute
-			2,                   // number of elements per vertex, here (x,y,z)
-			GL_FLOAT,            // the type of each element
-			GL_FALSE,            // take our values as-is
-			0,					 // next coord3d appears every 6 floats
-			vert_array      // vertex array pointer
-		);
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glDisableVertexAttribArray(renderer->attribute_coord3d);
+		model->render(renderer->shader);
 	}
-
 };

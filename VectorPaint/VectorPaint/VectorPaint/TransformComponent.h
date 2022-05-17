@@ -30,7 +30,7 @@ public:
 	}
 
 
-	TransformComponent(float p_x, float p_y, int p_w, int p_h, int p_scX, int p_scY)
+	TransformComponent(float p_x, float p_y, int p_w, int p_h, float p_scX, float p_scY)
 	{
 		Position.x = p_x;
 		Position.y = p_y;
