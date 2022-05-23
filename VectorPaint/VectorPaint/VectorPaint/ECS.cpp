@@ -49,13 +49,23 @@ namespace ECS
 		);
 		//TODO :: need to link the actual view port res here.
 		float aspactRatio = (1024.0f / 680.0f);
-		if (pRect.w <= pRect.h)
+			Debug::LogToConsole("pRect " + pRect.ToString());
+
+			float w = pRect.w - pRect.x;
+			float absW = abs(w);
+			float h = pRect.h - pRect.y;
+			float absH = abs(h);
+
+		if (absW <= absH)
 		{
-			std::cout << " aspect ration " << (float)(1024.0f / 680.0f) << "\n";
-			this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.w, pRect.w * aspactRatio);
+			this->addComponent<TransformComponent>(pRect.x + w/2, pRect.y + h/2, 32, 32, pRect.w - pRect.x, (pRect.w - pRect.x)* aspactRatio);
+			Debug::LogToConsole("Case A");
 		}
 		else
-			this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.h , pRect.h * aspactRatio);
+		{
+			this->addComponent<TransformComponent>(pRect.x + w / 2, pRect.y + h / 2, 32, 32, (pRect.h - pRect.y)/aspactRatio, (pRect.h - pRect.y));
+			Debug::LogToConsole("Case B");
+		}
 		this->addComponent<PolygonComponent>(mesh);
 		this->addSystem<PolygonRendererSystem>();
 	}
@@ -68,8 +78,9 @@ namespace ECS
 			glm::vec3(0.0f, 0.0f, 0.f),
 			glm::vec3(1.0f)
 		);
-
-		this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.w, pRect.h);
+		float w = pRect.w - pRect.x;
+		float h = pRect.h - pRect.y;
+		this->addComponent<TransformComponent>(pRect.x + w / 2, pRect.y + h / 2, 32, 32, (pRect.w - pRect.x), (pRect.h - pRect.y));
 		this->addComponent<PolygonComponent>(mesh);
 		this->addSystem<PolygonRendererSystem>();
 	}
@@ -83,7 +94,9 @@ namespace ECS
 			glm::vec3(1.0f)
 		);
 
-		this->addComponent<TransformComponent>(pRect.x + pRect.w / 2, pRect.y + pRect.h / 2, 32, 32, pRect.w, pRect.h);
+		float w = pRect.w - pRect.x;
+		float h = pRect.h - pRect.y;
+		this->addComponent<TransformComponent>(pRect.x + w / 2, pRect.y + h / 2, 32, 32, (pRect.w - pRect.x), (pRect.h - pRect.y));
 		this->addComponent<PolygonComponent>(mesh);
 		this->addSystem<PolygonRendererSystem>();
 	}

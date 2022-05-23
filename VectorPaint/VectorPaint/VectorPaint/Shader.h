@@ -12,6 +12,8 @@
 #include<mat4x4.hpp>
 #include<gtc\type_ptr.hpp>
 
+#include "Debug.h"
+
 class Shader
 {
 private:
@@ -33,9 +35,11 @@ private:
 		{
 			while (std::getline(in_file, temp))
 				src += temp + "\n";
+			Debug::LogToConsole("SHADER::LINK_PROGRAM");
 		}
 		else
 		{
+			Debug::LogToConsole("ERROR::SHADER::COULD_NOT_OPEN_FILE:");
 			std::cout << "ERROR::SHADER::COULD_NOT_OPEN_FILE: " << fileName << "\n";
 		}
 
@@ -59,9 +63,12 @@ private:
 		if (!success)
 		{
 			glGetShaderInfoLog(shader, 512, NULL, infoLog);
+			Debug::LogToConsole("ERROR::SHADER::COULD_NOT_COMPILE_SHADER:");
 			std::cout << "ERROR::SHADER::COULD_NOT_COMPILE_SHADER: " << fileName << "\n";
 			std::cout << infoLog << "\n";
 		}
+		else
+			Debug::LogToConsole("SHADER::LOADED");
 
 		return shader;
 	}
@@ -84,6 +91,7 @@ private:
 		{
 			glGetProgramInfoLog(this->id, 512, NULL, infoLog);
 			std::cout << "ERROR::SHADER::COULD_NOT_LINK_PROGRAM" << "\n";
+			Debug::LogToConsole("ERROR::SHADER::COULD_NOT_LINK_PROGRAM");
 			std::cout << infoLog << "\n";
 		}
 

@@ -5,13 +5,13 @@
 #include "imgui_impl_opengl3.h"
 #include <imgui_internal.h>
 #include <vec4.hpp>
+#include "Camera.h"
 
 bool GUIManager::Initialize(Window* p_window)
 {
 	window = p_window;
 	mToolsManager = ToolsManager::GetInstance();
-	debug = Debug::GetInstance();
-	debug->Initialize();
+	Debug::Initialize();
 	const char* glsl_version = "#version 120";
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -54,8 +54,13 @@ void GUIManager::RenderGUI()
 			mToolsManager->SetSelectedTool(static_cast<ToolsManager::Tools>(tool));
 		}
 	}
-
+	if (ImGui::Button("ResetCamera"))
+	{
+		Camera::x = 0;
+		Camera::y = 0;
+	}
 	ImGui::End();
+	
 	ImGui::SetNextItemWidth(500);
 	ImGui::Begin("Color Selection");
 	ImGui::ColorPicker4("Select color", fillColor , ImGuiColorEditFlags_DisplayRGB  | ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_Float | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoSidePreview);
@@ -65,7 +70,7 @@ void GUIManager::RenderGUI()
 	mToolsManager->SetCurrentColor(glm::vec4(fillColor[0], fillColor[1], fillColor[2] , fillColor[3]));
 	ImGui::End();
 
-	debug->RenderGUI();
+	Debug::RenderGUI();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -106,7 +111,7 @@ void GUIManager::SetDockSpace()
 }
 void GUIManager::Clean()
 {
-	debug->Clean();
+	Debug::Clean();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();

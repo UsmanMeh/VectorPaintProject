@@ -9,6 +9,7 @@
 #include"Texture.h"
 #include"Material.h"
 #include <gtc/matrix_transform.hpp>
+#include "Camera.h"
 
 class Mesh
 {
@@ -29,6 +30,8 @@ public:
 	glm::vec3 scale;
 
 	glm::mat4 ModelMatrix;
+	glm::mat4 ViewMatrix;
+	glm::mat4 ProjectionMatrix;
 
 	void initVAO()
 	{
@@ -64,10 +67,14 @@ public:
 	void updateUniforms(Shader* shader)
 	{
 		shader->setMat4fv(this->ModelMatrix, "ModelMatrix");
+		shader->setMat4fv(this->ViewMatrix, "ViewMatrix");
+		shader->setMat4fv(this->ProjectionMatrix, "ProjectionMatrix");
 	}
 
 	void updateModelMatrix()
 	{
+		//this->ProjectionMatrix = glm::ortho(0, 1024, 0, 680, -1, 1);
+
 		this->ModelMatrix = glm::mat4(1.f);
 		this->ModelMatrix = glm::translate(this->ModelMatrix, this->origin);
 		this->ModelMatrix = glm::rotate(this->ModelMatrix, glm::radians(this->rotation.x), glm::vec3(1.f, 0.f, 0.f));
@@ -75,6 +82,11 @@ public:
 		this->ModelMatrix = glm::rotate(this->ModelMatrix, glm::radians(this->rotation.z), glm::vec3(0.f, 0.f, 1.f));
 		this->ModelMatrix = glm::translate(this->ModelMatrix, this->position - this->origin);
 		this->ModelMatrix = glm::scale(this->ModelMatrix, this->scale);
+
+		this->ViewMatrix = glm::mat4(1.f);
+		this->ViewMatrix = glm::translate(this->ViewMatrix, glm::vec3(Camera::x,Camera::y,0));
+		this->ViewMatrix = glm::scale(this->ViewMatrix, glm::vec3(Camera::Zoom, Camera::Zoom, 0));
+
 	}
 
 

@@ -1,21 +1,14 @@
 #include "Debug.h"
 #include <imgui.h>
-Debug* Debug::instance = nullptr;
-Debug* Debug::GetInstance()
-{
-	if (!instance)
-	{
-		instance = new Debug;
-	}
-	return instance;
-}
+std::string Debug::mConsoleString = "";
 void Debug::Initialize()
 {
 
 }
 void Debug::RenderGUI()
 {
-	ImGui::Begin("Debug Window");
+	bool open;
+	ImGui::Begin("Debug Window",&open, ImGuiWindowFlags_AlwaysVerticalScrollbar);
 	if (ImGui::Button("Clear"))
 	{
 		mConsoleString.clear();
@@ -27,8 +20,13 @@ void Debug::Clean()
 {
 
 }
-void Debug::Log(std::string pLogString)
+void Debug::LogToConsole(std::string pLogString , bool LogToCmd )
 {
 	mConsoleString += "\n";
 	mConsoleString += pLogString;
+	Log(pLogString);
+}
+void Debug::Log(std::string pLogString)
+{
+	std::cout << pLogString << std::endl;
 }

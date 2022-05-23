@@ -13,6 +13,13 @@ enum class MouseState : std::size_t
 	down,
 	up,
 };
+enum class MouseButton : std::size_t
+{
+	left,
+	right,
+	middle,
+	none
+};
 class MouseController
 {
 private:
@@ -20,15 +27,20 @@ private:
 	Scene* mScene;
 	ToolsManager* mToolsManager;
 	std::pair <int, int > currentMousePos;
+	void RenderDrawingRect();
+	void OnLeftMouseUp(Vector2D startPos, Vector2D endPos);
+	void OnLeftMouseDown(Vector2D Pos);
+	void OnMiddleMouseUp(Vector2D startPos, Vector2D endPos);
+	void OnMiddleMouseDown(Vector2D Pos);
+	void ConvertToCameraSpace(Vector2D* point);
+
 public:
 	~MouseController();
-	//TransformComponent* transform;
 	void Initialize(Scene* pScene,Renderer* pRenderer);
 	void UpdateEvent(SDL_Event event);
 	void Render(); 
-	void MouseEvent(MouseState ms, Vector2D position);
-	void OnMouseUp(Vector2D startPos, Vector2D endPos);
-	void OnMouseDown(Vector2D Pos);
+	void Update();
+	void MouseEvent(MouseState ms, MouseButton mb, Vector2D position);
 
 	float map(float value,
 		float pBaseFrom, float pBaseTo,

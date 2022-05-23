@@ -42,6 +42,7 @@ void Manager::Update()
 		}
 		mouseController.UpdateEvent(event);
 	}
+	mouseController.Update();
 	//renderer.Update();
 	sceneManager.Update();
 }
@@ -49,8 +50,8 @@ void Manager::Render()
 {
 	renderer.PreRender(&window);
 	renderer.Render(window.SDLWindow);
-	mouseController.Render();
 	sceneManager.Render();
+	mouseController.Render();
 }
 void Manager::RenderGUI()
 {

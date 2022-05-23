@@ -27,20 +27,18 @@ public:
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		//std::cout << "\nShaders Init Complete." << std::endl;
 		return true;
 	}
 	void Update() {
-
 	}
 	void PreRender(Window* pWindow)
 	{
 		mWindow = pWindow;
 		glViewport(mWindow->Width/2- viewPortWidth/2, mWindow->Height/2 - viewportHeight/2, viewPortWidth, viewportHeight);
-	/*	glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, 1, 1, 0, 0, 1000);
-		glMatrixMode(GL_MODELVIEW);*/
+		//glMatrixMode(GL_PROJECTION);
+		//glLoadIdentity();
+		//glOrtho(0, viewPortWidth, viewportHeight, 0, -5, 5);
+		//glMatrixMode(GL_MODELVIEW);
 		glClearColor(0.5, 0.5, 0.5, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
