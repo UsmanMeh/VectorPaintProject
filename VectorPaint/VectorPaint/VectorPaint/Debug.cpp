@@ -11,14 +11,14 @@ void Debug::RenderGUI()
 	ImGui::Begin("Debug Window",&open, ImGuiWindowFlags_AlwaysVerticalScrollbar);
 	if (ImGui::Button("Clear"))
 	{
-		mConsoleString.clear();
+		Debug::Clean();
 	}
 	ImGui::TextWrapped(mConsoleString.c_str());
 	ImGui::End();
 }
 void Debug::Clean()
 {
-
+	mConsoleString.clear();
 }
 void Debug::LogToConsole(std::string pLogString , bool LogToCmd )
 {

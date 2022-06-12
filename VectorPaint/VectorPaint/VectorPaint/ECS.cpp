@@ -1,6 +1,7 @@
 #include "ECS.h"
 #include "TransformComponent.h"
 #include "PolygonComponent.h"
+#include "ColliderComponent.h"
 #include "PolygonRendererSystem.h"
 namespace ECS
 {
@@ -21,6 +22,10 @@ namespace ECS
 		{
 			systems[i]->Render();
 		}
+	}
+	bool Entity::Select(Vector2D pClickPoint)
+	{
+		return getComponent<ColliderComponent>().CheckHit(pClickPoint);
 	}
 	//Selection , Line, Square, Rectangle, Triangle, Circle , size
 	Mesh* mesh;
@@ -49,21 +54,25 @@ namespace ECS
 		);
 		//TODO :: need to link the actual view port res here.
 		float aspactRatio = (1024.0f / 680.0f);
-			Debug::LogToConsole("pRect " + pRect.ToString());
 
-			float w = pRect.w - pRect.x;
-			float absW = abs(w);
-			float h = pRect.h - pRect.y;
-			float absH = abs(h);
+		float w = pRect.w - pRect.x;
+		float h = pRect.h - pRect.y;
+		float absW = abs(w);
+		float absH = abs(h);
+		float cX = pRect.x + w / 2;
+		float cy = pRect.y + h / 2;
+
 
 		if (absW <= absH)
 		{
-			this->addComponent<TransformComponent>(pRect.x + w/2, pRect.y + h/2, 32, 32, pRect.w - pRect.x, (pRect.w - pRect.x)* aspactRatio);
+			this->addComponent<TransformComponent>(cX, cy, absW , absW *aspactRatio, w , w * aspactRatio);
+			this->addComponent<ColliderComponent>(cX - absW/2, cy - absW / 2, absW, absW * aspactRatio);
 			Debug::LogToConsole("Case A");
 		}
 		else
 		{
-			this->addComponent<TransformComponent>(pRect.x + w / 2, pRect.y + h / 2, 32, 32, (pRect.h - pRect.y)/aspactRatio, (pRect.h - pRect.y));
+			this->addComponent<TransformComponent>(cX, cy, absH / aspactRatio, absH, h / aspactRatio, h);
+			this->addComponent<ColliderComponent>(cX - absW / 2, cy - absW / 2, absH / aspactRatio , absH);
 			Debug::LogToConsole("Case B");
 		}
 		this->addComponent<PolygonComponent>(mesh);
@@ -80,7 +89,12 @@ namespace ECS
 		);
 		float w = pRect.w - pRect.x;
 		float h = pRect.h - pRect.y;
-		this->addComponent<TransformComponent>(pRect.x + w / 2, pRect.y + h / 2, 32, 32, (pRect.w - pRect.x), (pRect.h - pRect.y));
+		float absW = abs(w);
+		float absH = abs(h);
+		float cX = pRect.x + w / 2;
+		float cy = pRect.y + h / 2;
+		this->addComponent<TransformComponent>(cX, cy, 32, 32, (w), (h));
+		this->addComponent<ColliderComponent>((cX) - absW / 2, (cy) - absH/2, absW, absH);
 		this->addComponent<PolygonComponent>(mesh);
 		this->addSystem<PolygonRendererSystem>();
 	}
@@ -96,7 +110,14 @@ namespace ECS
 
 		float w = pRect.w - pRect.x;
 		float h = pRect.h - pRect.y;
-		this->addComponent<TransformComponent>(pRect.x + w / 2, pRect.y + h / 2, 32, 32, (pRect.w - pRect.x), (pRect.h - pRect.y));
+		float absW = abs(w);
+		float absH = abs(h);
+		float cX = pRect.x + w / 2;
+		float cy = pRect.y + h / 2;
+
+		this->addComponent<TransformComponent>(cX, cy, 32, 32, (w), (h));
+		this->addComponent<ColliderComponent>((cX)-absW / 2, (cy)-absH / 2, absW, absH);
+
 		this->addComponent<PolygonComponent>(mesh);
 		this->addSystem<PolygonRendererSystem>();
 	}

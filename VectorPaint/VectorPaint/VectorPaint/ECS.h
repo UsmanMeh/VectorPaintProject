@@ -75,6 +75,7 @@ namespace ECS
 	public:
 		void Update();
 		void Render();
+		bool Select(Vector2D pClickPoint);
 		void AddLine(Rect pRect);
 		void AddSquare(Rect pRect);
 		void AddRectangle(Rect pRect);

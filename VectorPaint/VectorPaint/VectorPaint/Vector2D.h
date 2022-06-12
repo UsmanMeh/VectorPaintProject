@@ -1,5 +1,6 @@
 #pragma once
 #include "iostream"
+#include <string>
 class Vector2D
 {
 public:
@@ -14,5 +15,9 @@ public:
 	void Debug()
 	{
 		std::cout << "x = " << x << "y = " << y << std::endl;
+	}
+	std::string ToString()
+	{
+		return "x = " + std::to_string(x) + "y = " + std::to_string(y);
 	}
 };

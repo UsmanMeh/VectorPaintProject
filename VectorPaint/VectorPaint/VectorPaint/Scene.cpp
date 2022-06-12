@@ -13,26 +13,27 @@
 	{
 		mEntityManager = new ECS::ECSManager();
 		mCommandManager = new CommandManager();
+		mSelectionManager = new SelectionManager(mEntityManager);
+		mSelectionManager->Initialize();
 		std::cout << "Scene::Initialize(" << Name << ")" << std::endl;
 	}
 	void Scene::Update()
 	{
 		mEntityManager->Update();
-		//std::cout << "Scene::Update(" << Name << ")" << std::endl; 
 	}
 	void Scene::Render()
 	{
 		mEntityManager->Render();
-		//std::cout << "Scene::Render(" << Name << ")" << std::endl;
 	}
 	void Scene::RenderGUI()
 	{
-		//std::cout << "Scene::RenderGUI(" << Name << ")" << std::endl;
 	}
 	void Scene::Clean()
 	{
+		mEntityManager->CleanUp();
+		delete mSelectionManager;
+		delete mCommandManager;
 		delete mEntityManager;
-		std::cout << "Scene::Clean(" << Name << ")" << std::endl;
 	}
 
 	ECS::Entity& Scene::CreateNewEntity()

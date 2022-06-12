@@ -178,6 +178,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SelectionManager.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="ToolsManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="..\thirdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="AddPolygonCommand.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="Debug.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SelectionManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="ToolsManager.h" />

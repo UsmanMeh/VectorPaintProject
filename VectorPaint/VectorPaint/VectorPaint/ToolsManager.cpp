@@ -19,7 +19,7 @@ void ToolsManager::Initialize()
 	}
 	ToolsList[Tools::Square] = true;
 	//Selection , Line, Square, Rectangle, Triangle, Circle , size
-	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Selection,"[NA]Selection Tool"));
+	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Selection,"Selection Tool"));
 	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Line,"[NA]Line Tool"));
 	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Square,"Square Tool"));
 	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Rectangle,"Rectangle Tool"));

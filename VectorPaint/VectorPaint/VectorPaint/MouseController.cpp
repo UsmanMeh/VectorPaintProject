@@ -218,10 +218,22 @@ bool IsInRange(Vector2D point)
 }
 void MouseController::OnLeftMouseDown(Vector2D pos)
 {
+	Rect vRect = mRenderer->GetViewportRect();
+	pos = reMap(pos, vRect);
+	ConvertToCameraSpace(&pos);
+
+	switch (mToolsManager->GetSelectedTool())
+	{
+		case ToolsManager::Tools::Selection:
+			Debug::LogToConsole(pos.ToString());
+			mScene->mSelectionManager->SelectEntity(pos);
+			break;
+	}
 	std::cout << "OnMouseDownEvent\n";
 }
 void MouseController::OnLeftMouseUp(Vector2D startPos, Vector2D endPos)
 {
+	
 	Rect vRect = mRenderer->GetViewportRect();
 	//remap start Pos;
 	startPos = reMap(startPos, vRect);
@@ -236,6 +248,8 @@ void MouseController::OnLeftMouseUp(Vector2D startPos, Vector2D endPos)
 		std::unique_ptr<AddPolygonCommand>  addPolyCmd;
 		switch (mToolsManager->GetSelectedTool())
 		{
+			case ToolsManager::Tools::Selection:
+			break;
 			case ToolsManager::Tools::Line:
 			break;
 			case ToolsManager::Tools::Rectangle:

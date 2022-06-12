@@ -7,7 +7,13 @@ struct Rect
 	float y;
 	float w;
 	float h;
-
+	Rect()
+	{
+		x = 0;
+		y = 0;
+		w = 1.0f;
+		h = 1.0f;
+	}
 	Rect(float px, float py, float pw, float ph)
 	{
 		x = px;
