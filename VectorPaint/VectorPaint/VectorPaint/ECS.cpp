@@ -25,155 +25,22 @@ namespace ECS
 	}
 	bool Entity::Select(Vector2D pClickPoint)
 	{
-		return getComponent<ColliderComponent>().CheckHit(pClickPoint);
+		return getComponent<ColliderComponent>()->CheckHit(pClickPoint);
 	}
-	//Selection , Line, Square, Rectangle, Triangle, Circle , size
-	Mesh* mesh;
-	void Entity::AddLine(Rect pRect)
-	{
-		mesh = new Mesh(
-			Square(),
-			glm::vec3(0.f, 0.f, 0.f), 
-			glm::vec3(0.5f),
-			glm::vec3(0.0f,0.0f,0.f),
-			glm::vec3(1.0f)
-		);
-
-		this->addComponent<TransformComponent>(pRect.x+ pRect.w/2, pRect.y + pRect.h/2,32,32, pRect.w, pRect.h);
-		this->addComponent<PolygonComponent>(mesh);
-		this->addSystem<PolygonRendererSystem>();
-	}
-	void Entity::AddSquare(Rect pRect)
-	{
-		mesh = new Mesh(
-			Square(),
-			glm::vec3(0.f, 0.f, 0.f),
-			glm::vec3(0.5f),
-			glm::vec3(0.0f, 0.0f, 0.f),
-			glm::vec3(1.0f)
-		);
-		//TODO :: need to link the actual view port res here.
-		float aspactRatio = (1024.0f / 680.0f);
-
-		float w = pRect.w - pRect.x;
-		float h = pRect.h - pRect.y;
-		float absW = abs(w);
-		float absH = abs(h);
-		float cX = pRect.x + w / 2;
-		float cy = pRect.y + h / 2;
-
-
-		if (absW <= absH)
-		{
-			this->addComponent<TransformComponent>(cX, cy, absW , absW *aspactRatio, w , w * aspactRatio);
-			this->addComponent<ColliderComponent>(cX - absW/2, cy - absW / 2, absW, absW * aspactRatio);
-			Debug::LogToConsole("Case A");
-		}
-		else
-		{
-			this->addComponent<TransformComponent>(cX, cy, absH / aspactRatio, absH, h / aspactRatio, h);
-			this->addComponent<ColliderComponent>(cX - absW / 2, cy - absW / 2, absH / aspactRatio , absH);
-			Debug::LogToConsole("Case B");
-		}
-		this->addComponent<PolygonComponent>(mesh);
-		this->addSystem<PolygonRendererSystem>();
-	}
-	void Entity::AddRectangle(Rect pRect)
-	{
-		mesh = new Mesh(
-			Square(),
-			glm::vec3(0.f, 0.f, 0.f),
-			glm::vec3(0.5f),
-			glm::vec3(0.0f, 0.0f, 0.f),
-			glm::vec3(1.0f)
-		);
-		float w = pRect.w - pRect.x;
-		float h = pRect.h - pRect.y;
-		float absW = abs(w);
-		float absH = abs(h);
-		float cX = pRect.x + w / 2;
-		float cy = pRect.y + h / 2;
-		this->addComponent<TransformComponent>(cX, cy, 32, 32, (w), (h));
-		this->addComponent<ColliderComponent>((cX) - absW / 2, (cy) - absH/2, absW, absH);
-		this->addComponent<PolygonComponent>(mesh);
-		this->addSystem<PolygonRendererSystem>();
-	}
-	void Entity::AddTriangle(Rect pRect)
-	{
-		mesh = new Mesh(
-			Triangle(),
-			glm::vec3(0.f, 0.f, 0.f),
-			glm::vec3(0.5f),
-			glm::vec3(0.0f, 0.0f, 0.f),
-			glm::vec3(1.0f)
-		);
-
-		float w = pRect.w - pRect.x;
-		float h = pRect.h - pRect.y;
-		float absW = abs(w);
-		float absH = abs(h);
-		float cX = pRect.x + w / 2;
-		float cy = pRect.y + h / 2;
-
-		this->addComponent<TransformComponent>(cX, cy, 32, 32, (w), (h));
-		this->addComponent<ColliderComponent>((cX)-absW / 2, (cy)-absH / 2, absW, absH);
-
-		this->addComponent<PolygonComponent>(mesh);
-		this->addSystem<PolygonRendererSystem>();
-	}
-	template <typename T, typename... TArgs> T & Entity::addComponent(TArgs&&... mArgs)
-	{
-		T* c(new T(std::forward<TArgs>(mArgs)...));
-		c->entity = this;
-		std::unique_ptr<Component> uPtr{ c };
-		components.emplace_back(std::move(uPtr));
-
-		componentArray[getComponentTypeID<T>()] = c;
-		componentBitset[getComponentTypeID<T>()] = true;
-
-		c->Initialize();
-		return *c;
-	}
-	template<typename T> T & Entity::getComponent() const
-	{
-		auto ptr(componentArray[getComponentTypeID<T>()]);
-		return *static_cast<T*>(ptr);
-	}
-
-	template <typename T> bool Entity::hasComponent() const
-	{
-		return componentBitset[getComponentTypeID<T>()];
-	}
-	template <typename T, typename... TArgs> T & Entity::addSystem(TArgs&&... mArgs)
-	{
-		T* s(new T(std::forward<TArgs>(mArgs)...));
-		s->entity = this;
-		std::unique_ptr<System> uPtr{ s };
-		systems.emplace_back(std::move(uPtr));
-
-		systemArray[getSystemTypeID<T>()] = s;
-		systemBitset[getSystemTypeID<T>()] = true;
-
-		s->Initialize();
-		return *s;
-	}
-	template<typename T> T & Entity::getSystem() const
-	{
-		auto ptr(systemArray[getSystemTypeID<T>()]);
-		return *static_cast<T*>(ptr);
-	}
-
-	template <typename T> bool Entity::hasSystem() const
-	{
-		return systemArray[getSystemTypeID<T>()];
-	}
-
 	bool Entity::IsActive() const
 	{
 		return active; 
 	}
+	bool Entity::ToBeDestroyed() const
+	{
+		return destroyed;
+	}
+	void Entity::SetActive(bool state)
+	{
+		active = state;
+	}
 	void Entity::Destroy()
 	{
-		active = false; 
+		destroyed = true;
 	}
 }

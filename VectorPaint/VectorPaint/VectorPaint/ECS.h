@@ -63,6 +63,7 @@ namespace ECS
 	{
 	private:
 		bool active = true;
+		bool destroyed = false;
 		std::vector<std::unique_ptr<Component>> components;
 		std::vector<std::unique_ptr<System>> systems;
 
@@ -76,20 +77,60 @@ namespace ECS
 		void Update();
 		void Render();
 		bool Select(Vector2D pClickPoint);
-		void AddLine(Rect pRect);
-		void AddSquare(Rect pRect);
-		void AddRectangle(Rect pRect);
-		void AddTriangle(Rect pRect);
 
-		template <typename T, typename... TArgs> T& addComponent(TArgs&&... mArgs);
-		template<typename T> T& getComponent() const;
-		template <typename T> bool hasComponent() const;
+		template <typename T, typename... TArgs>
+		T& AddComponent(TArgs&&... mArgs)
+		{
+			T* c(new T(std::forward<TArgs>(mArgs)...));
+			c->entity = this;
+			std::unique_ptr<Component> uPtr{ c };
+			components.emplace_back(std::move(uPtr));
 
-		template <typename T, typename... TArgs> T& addSystem(TArgs&&... mArgs);
-		template<typename T> T& getSystem() const;
-		template <typename T> bool hasSystem() const;
+			componentArray[getComponentTypeID<T>()] = c;
+			componentBitset[getComponentTypeID<T>()] = true;
+
+			c->Initialize();
+			return *c;
+		}
+
+		template<typename T> T* getComponent() const
+		{
+			auto ptr(componentArray[getComponentTypeID<T>()]);
+			return static_cast<T*>(ptr);
+		}
+
+		template <typename T> bool hasComponent() const
+		{
+			return componentBitset[getComponentTypeID<T>()];
+		}
+		template <typename T, typename... TArgs> T& addSystem(TArgs&&... mArgs)
+		{
+			T* s(new T(std::forward<TArgs>(mArgs)...));
+			s->entity = this;
+			std::unique_ptr<System> uPtr{ s };
+			systems.emplace_back(std::move(uPtr));
+
+			systemArray[getSystemTypeID<T>()] = s;
+			systemBitset[getSystemTypeID<T>()] = true;
+
+			s->Initialize();
+			return *s;
+		}
+		template<typename T> T& getSystem() const
+		{
+			auto ptr(systemArray[getSystemTypeID<T>()]);
+			return *static_cast<T*>(ptr);
+		}
+
+		template <typename T> bool hasSystem() const
+		{
+			return systemArray[getSystemTypeID<T>()];
+		}
 
 		bool IsActive() const;
+		bool ToBeDestroyed() const;
+		void SetActive(bool state);
 		void Destroy();
 	};
+
 }

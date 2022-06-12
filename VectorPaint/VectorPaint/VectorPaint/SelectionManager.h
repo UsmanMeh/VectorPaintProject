@@ -6,6 +6,7 @@ class SelectionManager
 private:
 	ECS::ECSManager * mEntityManager;
 	std::vector<std::shared_ptr<ECS::Entity>> mSelectedEntities;
+	void SelectNewEntity(Vector2D pPoint);
 public: 
 	SelectionManager(ECS::ECSManager* pEntitymanager) : mEntityManager(pEntitymanager) {};
 	void Initialize();
@@ -15,5 +16,7 @@ public:
 	void Clean();
 
 	void SelectEntity(Vector2D pPoint);
+	std::shared_ptr<ECS::Entity> GetSelectedEntity();
+	bool IsAnyEntitySelected();
 };
 

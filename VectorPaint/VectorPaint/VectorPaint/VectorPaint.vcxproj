@@ -169,12 +169,17 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="DrawingManager.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="ECSManager.cpp" />
+    <ClCompile Include="GizmoManager.cpp" />
     <ClCompile Include="GUIManager.cpp" />
+    <ClCompile Include="KeyboardController.cpp" />
+    <ClCompile Include="LineGizmo.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="MouseController.cpp" />
     <ClCompile Include="Rect.h" />
+    <ClCompile Include="RectGizmo.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -197,17 +202,34 @@
     <ClInclude Include="..\thirdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\thirdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="..\thirdParty\imgui\imstb_truetype.h" />
+    <ClInclude Include="AddCircleCommand.h" />
+    <ClInclude Include="AddLineCommand.h" />
+    <ClInclude Include="AddPathCommand.h" />
     <ClInclude Include="AddPolygonCommand.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CircleComponent.h" />
+    <ClInclude Include="CircleRenderingSystem.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="ControlPoint.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="delaunator.hpp" />
+    <ClInclude Include="DrawingManager.h" />
     <ClInclude Include="ECSManager.h" />
+    <ClInclude Include="Gizmo.h" />
+    <ClInclude Include="GizmoManager.h" />
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="ECS.h" />
+    <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="LineRenderingSystem.h" />
+    <ClInclude Include="LineComponent.h" />
+    <ClInclude Include="lineGizmo.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="MouseController.h" />
+    <ClInclude Include="MoveEntityCommand.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="ICommand.h" />
     <ClInclude Include="Manager.h" />
@@ -215,11 +237,13 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PolygonComponent.h" />
     <ClInclude Include="PolygonRendererSystem.h" />
+    <ClInclude Include="RectGizmo.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SelectionManager.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="ToolsManager.h" />
     <ClInclude Include="TransformComponent.h" />
@@ -230,7 +254,9 @@
   <ItemGroup>
     <None Include="..\thirdParty\imgui\imgui.gdb" />
     <None Include="..\thirdParty\imgui\imgui.natstepfilter" />
-    <None Include="fragment_shader.glsl" />
+    <None Include="circle_fragment_shader.glsl" />
+    <None Include="line_fragment_shader.glsl" />
+    <None Include="polygon_fragment_shader.glsl" />
     <None Include="vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>

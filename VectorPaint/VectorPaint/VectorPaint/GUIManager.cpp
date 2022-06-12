@@ -6,11 +6,13 @@
 #include <imgui_internal.h>
 #include <vec4.hpp>
 #include "Camera.h"
+const ImGuiViewport* viewport;
 
 bool GUIManager::Initialize(Window* p_window)
 {
 	window = p_window;
 	mToolsManager = ToolsManager::GetInstance();
+	mCommandManager = Manager::GetInstance()->GetSceneManager()->GetActvieScene()->mCommandManager;
 	Debug::Initialize();
 	const char* glsl_version = "#version 120";
 	IMGUI_CHECKVERSION();
@@ -21,68 +23,32 @@ bool GUIManager::Initialize(Window* p_window)
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 
-	fillColor[0] = 0;
-	fillColor[1] = 0;
-	fillColor[2] = .5;
+	fillColor[0] = 1;
+	fillColor[1] = 1;
+	fillColor[2] = 0;
 	fillColor[3] = 1;
 
 	// Setup Platform/Renderer backends
 	ImGui_ImplSDL2_InitForOpenGL(window->SDLWindow, window->GLContext);
 	ImGui_ImplOpenGL3_Init(glsl_version);
-    return false;
+	viewport = ImGui::GetMainViewport();
+	mToolButtonTextures.push_back(new Texture("IconPack/001-clicker.png", GL_TEXTURE_2D));
+	mToolButtonTextures.push_back(new Texture("IconPack/002-line.png", GL_TEXTURE_2D));
+	mToolButtonTextures.push_back(new Texture("IconPack/003-square.png", GL_TEXTURE_2D));
+	mToolButtonTextures.push_back(new Texture("IconPack/004-rectangle.png", GL_TEXTURE_2D));
+	mToolButtonTextures.push_back(new Texture("IconPack/005-triangle.png", GL_TEXTURE_2D));
+	mToolButtonTextures.push_back(new Texture("IconPack/006-circle.png", GL_TEXTURE_2D));
+	mToolButtonTextures.push_back(new Texture("IconPack/007-path.png", GL_TEXTURE_2D));
+    return true;
 }
-bool 
-square = true,
-circle = false, 
-rectangle = false,
-triangle = false;
-void GUIManager::RenderGUI()
-{
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-	SetDockSpace();
-    ShowMenuBar();
-	//ImGui::ShowDemoWindow();
-	ImGui::Begin("Tools");
 
-	for (int tool = ToolsManager::Tools::Selection; tool != ToolsManager::Tools::size; tool++)
-	{
-	    if(ImGui::RadioButton(mToolsManager->ToolsNameList[static_cast<ToolsManager::Tools>(tool)].c_str(), static_cast<ToolsManager::Tools>(tool) == mToolsManager->GetSelectedTool()))
-		{
-			mToolsManager->ToolsList[static_cast<ToolsManager::Tools>(tool)] = true;
-			mToolsManager->SetSelectedTool(static_cast<ToolsManager::Tools>(tool));
-		}
-	}
-	if (ImGui::Button("ResetCamera"))
-	{
-		Camera::x = 0;
-		Camera::y = 0;
-	}
-	ImGui::End();
-	
-	ImGui::SetNextItemWidth(500);
-	ImGui::Begin("Color Selection");
-	ImGui::ColorPicker4("Select color", fillColor , ImGuiColorEditFlags_DisplayRGB  | ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_Float | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoSidePreview);
-	const ImVec4 col_v4(fillColor[0], fillColor[1], fillColor[2], fillColor[3]);
-	ImGui::SetNextItemWidth(500);
-	ImGui::ColorButton("Test Color Button", col_v4);
-	mToolsManager->SetCurrentColor(glm::vec4(fillColor[0], fillColor[1], fillColor[2] , fillColor[3]));
-	ImGui::End();
 
-	Debug::RenderGUI();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	//SDL_GL_SwapWindow(window->SDLWindow);
-}
 void GUIManager::SetDockSpace()
 {
 	//Flags for dock space and dock space window
 	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 	//Setting window size for dock space window.
-	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
 	ImGui::SetNextWindowSize(viewport->WorkSize);
 	ImGui::SetNextWindowViewport(viewport->ID);
@@ -109,6 +75,88 @@ void GUIManager::SetDockSpace()
 
 	ImGui::End();
 }
+
+void GUIManager::RenderGUI()
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+    ShowMenuBar();
+	SetDockSpace();
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowSize(ImVec2(64, viewport->WorkSize.y));
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	bool open = true;
+	//ImGui::ShowDemoWindow();
+	ImGui::Begin("Tools", &open, window_flags);
+	int frame_padding = -1;                             // -1 == uses default padding (style.FramePadding)
+	ImVec2 size = ImVec2(32.0f, 32.0f);                     // Size of the image we want to make visible
+	ImVec2 uv0 = ImVec2(0.0f, 0.0f);                        // UV coordinates for lower-left
+	ImVec2 uv1 = ImVec2(1.0f, 1.0f);// UV coordinates for (32,32) in our texture
+	ImVec4 bg_col = ImVec4(1.0f, 1.0f, 1.0f, 0.0f);         // Black background
+	ImVec4 tint_col = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);       // No tint
+	ToolsManager::Tools selectedTool = mToolsManager->GetSelectedTool();
+
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+	//ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+	for (int tool = ToolsManager::Tools::Selection; tool != ToolsManager::Tools::size; tool++)
+	{
+	  	if (static_cast<ToolsManager::Tools>(tool) == selectedTool)
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.5f, 0.5f, 0.7f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.5f, 0.7f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.5f, 0.5f, 0.7f, 1.0f));
+		}
+		if (tool < mToolButtonTextures.size())
+		{
+			if (ImGui::ImageButton(mToolButtonTextures[tool]->GetImTextureID(), size, uv0, uv1, frame_padding, bg_col, tint_col))
+			{
+				mToolsManager->SetSelectedTool(static_cast<ToolsManager::Tools>(tool));
+			}
+		}
+		if (static_cast<ToolsManager::Tools>(tool) == selectedTool)
+		{
+			ImGui::PopStyleColor(3);
+		}
+	}
+	ImGui::PopStyleColor(2);
+	
+	ImGui::End();
+	
+	//ImGui::SetNextItemWidth(500);
+	float pos[3] = {0.0f,0.0f,0.0f};
+	ImGui::Begin("Properties");
+	ImGui::InputFloat3("Position", pos);
+	if (ImGui::Button("ResetCamera"))
+	{
+		Camera::SetCameraPosition(0.0f, 0.0f);
+		Camera::SetCameraZoom(1.0);
+	}
+
+	ImGui::ColorPicker4("Select color", fillColor , ImGuiColorEditFlags_DisplayRGB  | ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_Float | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoSidePreview);
+	ImGui::End();
+
+	const ImVec4 col_v4(fillColor[0], fillColor[1], fillColor[2], fillColor[3]);
+	mToolsManager->SetCurrentColor(glm::vec4(fillColor[0], fillColor[1], fillColor[2] , fillColor[3]));
+	ImGui::Begin("History");
+	std::vector<std::string> commandHistoryDebugString;
+	mCommandManager->GetDebugList(&commandHistoryDebugString);
+	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -10), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+	for (auto cmdString: commandHistoryDebugString)
+		ImGui::TextWrapped(cmdString.c_str());
+
+	ImGui::EndChild();
+
+	ImGui::End();
+	Debug::RenderGUI();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	//SDL_GL_SwapWindow(window->SDLWindow);
+}
+
 void GUIManager::Clean()
 {
 	Debug::Clean();

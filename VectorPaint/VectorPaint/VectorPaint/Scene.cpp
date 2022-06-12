@@ -19,6 +19,7 @@
 	}
 	void Scene::Update()
 	{
+		mEntityManager->CleanUp();
 		mEntityManager->Update();
 	}
 	void Scene::Render()
@@ -36,7 +37,3 @@
 		delete mEntityManager;
 	}
 
-	ECS::Entity& Scene::CreateNewEntity()
-	{
-		return mEntityManager->AddEntity();
-	}

@@ -17,10 +17,8 @@
 class Shader
 {
 private:
-	//Member variables
 	GLuint id;
 
-	//Private functions
 	std::string loadShaderSource(std::string fileName)
 	{
 		std::string temp = "";
@@ -39,7 +37,7 @@ private:
 		}
 		else
 		{
-			Debug::LogToConsole("ERROR::SHADER::COULD_NOT_OPEN_FILE:");
+			Debug::LogToConsole("ERROR::SHADER::COULD_NOT_OPEN_FILE:"+ fileName+"\n");
 			std::cout << "ERROR::SHADER::COULD_NOT_OPEN_FILE: " << fileName << "\n";
 		}
 
@@ -142,7 +140,22 @@ public:
 
 		this->unuse();
 	}
+	void Set1f(float value, const GLchar* name)
+	{
+		this->use();
 
+		glUniform1f(glGetUniformLocation(this->id, name), value);
+
+		this->unuse();
+	}
+	void SetVec2f(glm::fvec2 value, const GLchar* name)
+	{
+		this->use();
+
+		glUniform2fv(glGetUniformLocation(this->id, name), 1, glm::value_ptr(value));
+
+		this->unuse();
+	}
 	void SetVec3f(glm::fvec3 value, const GLchar* name)
 	{
 		this->use();

@@ -1,6 +1,5 @@
 #include "ToolsManager.h"
 
-
 ToolsManager* ToolsManager::instance = nullptr;
 ToolsManager* ToolsManager::GetInstance()
 {
@@ -17,14 +16,16 @@ void ToolsManager::Initialize()
 	{
 		ToolsList.insert(std::pair<Tools, bool>(static_cast<Tools>(tool), false));
 	}
-	ToolsList[Tools::Square] = true;
-	//Selection , Line, Square, Rectangle, Triangle, Circle , size
+	SelectedTool = Rectangle;
+	ToolsList[SelectedTool] = true;
+	//Selection , Line, Square, Rectangle, Triangle, Circle ,Path , size
 	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Selection,"Selection Tool"));
-	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Line,"[NA]Line Tool"));
+	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Line,"Line Tool"));
 	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Square,"Square Tool"));
 	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Rectangle,"Rectangle Tool"));
 	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Triangle,"Triangle Tool"));
-	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Circle,"[NA]Circle Tool"));
+	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Circle,"Circle Tool"));
+	ToolsNameList.insert(std::pair<Tools, std::string>(Tools::Path,"Path Tool"));
 }
 ToolsManager::Tools ToolsManager::GetSelectedTool()
 {
@@ -33,7 +34,9 @@ ToolsManager::Tools ToolsManager::GetSelectedTool()
 
 void ToolsManager::SetSelectedTool(Tools pSelectedTool)
 {
+	ToolsList[SelectedTool] = false;
 	SelectedTool = pSelectedTool;
+	ToolsList[SelectedTool] = true;
 }
 glm::vec4 ToolsManager::GetCurrentColor()
 {

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "glad/glad.h"
+#include <string>
 class Window
 {
 public:
@@ -16,6 +17,6 @@ public:
 
 	bool Initialize();
 	void Clean();
-
+	std::string ToString();
 };
 

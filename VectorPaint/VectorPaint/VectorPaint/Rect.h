@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Vector2D.h"
 struct Rect
 {
 	float x;
@@ -21,6 +22,11 @@ struct Rect
 		w = pw;
 		h = ph;
 	}
+	void SetStart(Vector2D pStartPoint)
+	{
+		x = pStartPoint.x;
+		y = pStartPoint.y;
+	}
 	void Debug()
 	{
 		std::cout << "x = " << x << " y = " << y << " w = " << w << " h = " << h << std::endl;
@@ -28,5 +34,9 @@ struct Rect
 	std::string ToString()
 	{
 		return "x = " + std::to_string(x) +" y = " + std::to_string(y )+ " w = " + std::to_string(w) +" h = " + std::to_string(h);
+	}
+	Vector2D GetOffset()
+	{
+		return Vector2D(x, y);
 	}
 };

@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include<string>
+#include "imgui.h"
 #include <glad/glad.h>
 #include <SDL_surface.h>
 #include <SDL_image.h>
@@ -20,7 +21,7 @@ public:
 	Texture(std::string path, GLenum type)
 	{
 		this->type = type;
-		loadFile(path);
+		LoadFile(path);
 	}
 
 	~Texture()
@@ -28,7 +29,9 @@ public:
 		glDeleteTextures(1, &this->id);
 	}
 
-	inline GLuint getID() const { return this->id; }
+	GLuint GetID() const { return this->id; }
+	void* GetImTextureID() const { return (void*)(intptr_t)this->id; }
+	ImVec2 GetSize() const { return ImVec2(width , height); }
 
 	void bind(const GLint texture_unit)
 	{
@@ -36,43 +39,11 @@ public:
 		glBindTexture(this->type, this->id);
 	}
 
-	void unbind()
+	void Unbind()
 	{
 		glActiveTexture(0);
 		glBindTexture(this->type, 0);
 	}
 
-	void loadFile(std::string path)
-	{
-		if (this->id)
-		{
-			glDeleteTextures(1, &this->id);
-		}
-
-		//Load the image from the file into SDL's surface representation
-		SDL_Surface* surf = IMG_Load(path.c_str());
-		//SDL_Surface* surf = SDL_LoadBMP("texture.bmp");
-
-		if (surf == NULL)
-		{
-			std::cout << "ERROR::TEXTURE::TEXTURE_LOADING_FAILED: " << path << "\nError = " << IMG_GetError() << "\n";
-			return;
-		}
-
-		width = surf->w;
-		height = surf->h;
-
-		glGenTextures(1, &this->id);
-		glBindTexture(type, this->id);
-
-		glTexParameteri(type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexImage2D(type, 0, GL_RGBA, this->width, this->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
-		glGenerateMipmap(type);
-
-
-		glActiveTexture(0);
-		glBindTexture(type, 0);
-		SDL_FreeSurface(surf);
-	}
+	void LoadFile(std::string path);
 };

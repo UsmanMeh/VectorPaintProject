@@ -10,7 +10,8 @@
 #include "imgui_impl_opengl3.h"
 
 #include "Manager.h"
-
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -20,6 +21,7 @@ int main(int argc, char* argv[])
 	manager->Initialize();
 	while (manager->ApplicationState == Manager::ApplicationStates::Running)
 	{
+		manager->UpdateEvent();
 		manager->Update();
 		manager->RenderGUI();
 		manager->Render();

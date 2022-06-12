@@ -45,4 +45,8 @@ public:
 		mesh->render(shader);
 		
 	}
+	glm::vec4 GetColor()
+	{
+		return color;
+	}
 };

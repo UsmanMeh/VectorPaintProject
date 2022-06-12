@@ -30,7 +30,6 @@ public:
 	glm::vec3 scale;
 
 	glm::mat4 ModelMatrix;
-	glm::mat4 ViewMatrix;
 	glm::mat4 ProjectionMatrix;
 
 	void initVAO()
@@ -67,14 +66,14 @@ public:
 	void updateUniforms(Shader* shader)
 	{
 		shader->setMat4fv(this->ModelMatrix, "ModelMatrix");
-		shader->setMat4fv(this->ViewMatrix, "ViewMatrix");
+		shader->setMat4fv(Camera::ViewMatrix, "ViewMatrix");
 		shader->setMat4fv(this->ProjectionMatrix, "ProjectionMatrix");
 	}
 
 	void updateModelMatrix()
 	{
-		//this->ProjectionMatrix = glm::ortho(0, 1024, 0, 680, -1, 1);
-
+		this->ProjectionMatrix = glm::mat4(1.f);
+		this->ProjectionMatrix = glm::ortho<float>(0.0f, 1920.0f, 1080.0f, 0.0f, -5.0f, 5.0f);
 		this->ModelMatrix = glm::mat4(1.f);
 		this->ModelMatrix = glm::translate(this->ModelMatrix, this->origin);
 		this->ModelMatrix = glm::rotate(this->ModelMatrix, glm::radians(this->rotation.x), glm::vec3(1.f, 0.f, 0.f));
@@ -82,13 +81,7 @@ public:
 		this->ModelMatrix = glm::rotate(this->ModelMatrix, glm::radians(this->rotation.z), glm::vec3(0.f, 0.f, 1.f));
 		this->ModelMatrix = glm::translate(this->ModelMatrix, this->position - this->origin);
 		this->ModelMatrix = glm::scale(this->ModelMatrix, this->scale);
-
-		this->ViewMatrix = glm::mat4(1.f);
-		this->ViewMatrix = glm::translate(this->ViewMatrix, glm::vec3(Camera::x,Camera::y,0));
-		this->ViewMatrix = glm::scale(this->ViewMatrix, glm::vec3(Camera::Zoom, Camera::Zoom, 0));
-
 	}
-
 
 	Mesh() {}
 	Mesh(
@@ -124,7 +117,37 @@ public:
 		this->initVAO();
 		this->updateModelMatrix();
 	}
+	Mesh(
+		std::vector<Vertex> vertexArray,
+		std::vector <size_t> indexArray,
+		glm::vec3 position = glm::vec3(0.f),
+		glm::vec3 origin = glm::vec3(0.f),
+		glm::vec3 rotation = glm::vec3(0.f),
+		glm::vec3 scale = glm::vec3(1.f))
+	{
+		this->position = position;
+		this->origin = origin;
+		this->rotation = rotation;
+		this->scale = scale;
 
+		this->nrOfVertices = vertexArray.size();
+		this->nrOfIndices = indexArray.size();
+
+		this->vertexArray = new Vertex[this->nrOfVertices];
+		for (size_t i = 0; i < this->nrOfVertices; i++)
+		{
+			this->vertexArray[i] = vertexArray[i];
+		}
+
+		this->indexArray = new GLuint[this->nrOfIndices];
+		for (size_t i = 0; i < this->nrOfIndices; i++)
+		{
+			this->indexArray[i] = indexArray[i];
+		}
+
+		this->initVAO();
+		this->updateModelMatrix();
+	}
 	Mesh
 	(
 		Primitive primitive,

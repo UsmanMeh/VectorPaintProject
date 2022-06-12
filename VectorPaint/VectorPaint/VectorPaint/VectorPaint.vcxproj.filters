@@ -34,6 +34,9 @@
     <Filter Include="Core\GraphicsCore\Shaders">
       <UniqueIdentifier>{4fc5583e-cb89-4584-99a2-13c84903d4e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Gizmo">
+      <UniqueIdentifier>{05f88eb2-e36c-493a-b3cb-12069bcf12f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VectorPaint.cpp">
@@ -118,6 +121,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SelectionManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LineGizmo.cpp">
+      <Filter>Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="GizmoManager.cpp">
+      <Filter>Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="RectGizmo.cpp">
+      <Filter>Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,6 +260,63 @@
     <ClInclude Include="SelectionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gizmo.h">
+      <Filter>Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="GizmoManager.h">
+      <Filter>Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlPoint.h">
+      <Filter>Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="lineGizmo.h">
+      <Filter>Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="RectGizmo.h">
+      <Filter>Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="AddLineCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="LineComponent.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="LineRenderingSystem.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleComponent.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="AddCircleCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleRenderingSystem.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AddPathCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="delaunator.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveEntityCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\thirdParty\imgui\imgui.gdb">
@@ -253,7 +328,13 @@
     <None Include="vertex_shader.glsl">
       <Filter>Core\GraphicsCore\Shaders</Filter>
     </None>
-    <None Include="fragment_shader.glsl">
+    <None Include="polygon_fragment_shader.glsl">
+      <Filter>Core\GraphicsCore\Shaders</Filter>
+    </None>
+    <None Include="line_fragment_shader.glsl">
+      <Filter>Core\GraphicsCore\Shaders</Filter>
+    </None>
+    <None Include="circle_fragment_shader.glsl">
       <Filter>Core\GraphicsCore\Shaders</Filter>
     </None>
   </ItemGroup>

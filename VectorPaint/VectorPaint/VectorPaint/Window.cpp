@@ -1,5 +1,6 @@
 #include "Window.h"
 
+
 bool Window::Initialize()
 {
 	//Set SDL open GL attributes
@@ -42,4 +43,9 @@ void Window::Clean()
 	SDL_DestroyWindow(SDLWindow);
 	SDL_GL_DeleteContext(GLContext);
 	SDL_Quit();
+}
+
+std::string Window::ToString()
+{
+	return "Width = " + std::to_string(Width) + " Height = " + std::to_string(Height);
 }

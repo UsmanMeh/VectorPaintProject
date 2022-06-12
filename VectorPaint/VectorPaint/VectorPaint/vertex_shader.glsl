@@ -10,6 +10,7 @@ out vec2 fragmentUv;
 
 void main()
 {
-    gl_Position = ViewMatrix * ModelMatrix  * vec4(vertex_position, 1);
+vec4 worldPost = ViewMatrix * ModelMatrix* vec4(vertex_position.x,vertex_position.y,0, 1);
+    gl_Position = ProjectionMatrix * worldPost;
     fragmentUv = vec2(vertex_texcoord.x, vertex_texcoord.y);
 }

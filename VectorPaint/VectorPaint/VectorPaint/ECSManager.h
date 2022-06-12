@@ -7,11 +7,13 @@ namespace ECS
 	private:
 		std::vector<std::shared_ptr<Entity>> entities;
 	public:
-		Entity& AddEntity();
+		std::shared_ptr<Entity> AddEntity();
+		bool RemoveEntity(std::shared_ptr<Entity> e);
+		bool SetEntityActiveState(std::shared_ptr<Entity> e, bool state);
 		void Update();
 		void Render();
 		void CleanUp();
-		void SelectEntity(std::vector<std::shared_ptr<ECS::Entity>> pEntities , Vector2D point);
+		void SelectEntity(std::vector<std::shared_ptr<ECS::Entity>>& pEntities , Vector2D point);
 	};
 }
 

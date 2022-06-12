@@ -19,7 +19,7 @@ public:
 	{
 		mesh = pMesh;
 		material = new Material();
-		texture = new Texture("test.png", GL_TEXTURE_2D);
+		texture = new Texture(Debug::TextureFilePath, GL_TEXTURE_2D);
 	}
 	~PolygonComponent() override {}
 	void Initialize() override

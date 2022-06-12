@@ -13,8 +13,8 @@ public:
 	void Initialize();
 	enum Tools
 	{
-		Selection , Line, Square, Rectangle, Triangle, Circle , size
-	} SelectedTool = Square;
+		Selection , Line, Square, Rectangle, Triangle, Circle , Path, size
+	} SelectedTool;
 	std::map<Tools, bool> ToolsList;
 	std::map<Tools, std::string> ToolsNameList;
 	Tools GetSelectedTool();

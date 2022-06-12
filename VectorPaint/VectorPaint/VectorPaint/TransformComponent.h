@@ -1,6 +1,7 @@
 #pragma once
 #include "ECS.h"
 #include "Vector2D.h"
+#include "Debug.h"
 
 class TransformComponent : public ECS::Component
 {
@@ -29,7 +30,6 @@ public:
 		Scale = Vector2D(p_scX, p_scY);
 	}
 
-
 	TransformComponent(float p_x, float p_y, int p_w, int p_h, float p_scX, float p_scY)
 	{
 		Position.x = p_x;
@@ -37,6 +37,7 @@ public:
 		Height = p_h;
 		Width = p_w;
 		Scale = Vector2D(p_scX, p_scY);
+		Debug::LogToConsole(Scale.ToString());
 	}
 	TransformComponent(Vector2D pPos , Vector2D pScale)
 	{
